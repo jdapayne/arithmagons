@@ -1,0 +1,2 @@
+# Arithmagons
+Arithmagon generator
