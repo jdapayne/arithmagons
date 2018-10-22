@@ -26,8 +26,9 @@
   <meta name="twitter:site" content="@DrPMaths" />
   <meta name="twitter:title" content="Arithmagon generator" />
   <meta name="twitter:image" content="https://jdapayne.github.io/arithmagons/twitter_preview.jpg" />
+  <meta name="twitter:description" content="Random arithmagon generator. Includes customisation options, increasing difficulty and generates integers or fractions. Addition or multiplication."/>
 
-  <meta name="description" content="Random arithmagon generator. Includes customisation options, increasing difficulty and generates integers or fractions. Addition or multiplication."/>
+  <meta name="description" content="Random arithmagon question generator. Includes customisation options, increasing difficulty and generates integers or fractions. Addition or multiplication."/>
   <meta name="keywords" content="maths,arithmagons,integers,fractions,question generator"/>
 
   <title>Integer Arithmagons</title>
@@ -43,9 +44,46 @@
   <div id="options">
 
     <div class="options-row">
+      <div class="options-part">
+        <h2>Type:</h2>
+        <ul class="options-list">
+          <li>Integers:
+            <label>
+              <input type="radio" value="integer-add" name="type" data-setting="options.type" class="option"/>
+              Add
+            </label>
+            <label>
+              <input type="radio" value="integer-multiply" name="type" data-setting="options.type" class="option"/>
+              Multiply
+            </label>
+          </li>
+
+          <li>Fractions:
+            <label>
+              <input type="radio" value="fraction-add" name="type" data-setting="options.type" class="option"/>
+              Add
+            </label>
+            <label>
+              <input type="radio" value="fraction-multiply" name="type" data-setting="options.type" class="option"/>
+              Multiply
+            </label>
+          </li>
+
+          <li>Algebra:
+            <label>
+              <input type="radio" value="algebra-add" name="type" data-setting="options.type" class="option"/>
+              Add
+            </label>
+            <label>
+              <input type="radio" value="algebra-multiply" name="type" data-setting="options.type" class="option"/>
+              Multiply
+            </label>
+          </li>
+        </ul>
+      </div>
 
       <div class="options-part">
-        <h2>Number options:</h2>
+        <h2>Type:</h2>
         <ul class="options-list">
           <li>
             <label><input type="radio" value="integer" name="type" data-setting="options.type" class="option" checked/>Integers</label>
@@ -78,6 +116,8 @@
                     <option>8</option>
                 </select>
           </li>
+          <li>
+            <label><input type="radio" value="algebra" name="type" data-setting="options.type" class="option" checked/>Algebra</label>
         </ul>
       </div>
 

@@ -51,6 +51,7 @@ body {
   justify-content:center;
   flex-direction:column;
   text-align: center;
+  white-space: nowrap;
 }
 .label.answer {
   color: red;

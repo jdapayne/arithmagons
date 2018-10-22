@@ -213,6 +213,8 @@ App.generateAll = function () {
   App.clear();
   // Create containers for questions and generate a question in each container
   let n = App.settings.n_questions;
+  const time_message="generate " + n + " questions";
+  console.time(time_message);
   for (let i=0; i<n; i++) {
     // Make DOM elements
     let container = document.createElement("div");
@@ -246,6 +248,7 @@ App.generateAll = function () {
     // Make question and question view
     App.generate(i);
   }
+  console.timeEnd(time_message);
   //MathJax.Hub.Queue(["Typeset",MathJax.Hub,"display-box"]);
 };
 /* * * * * * * * * * * * * * * * * * * * */
