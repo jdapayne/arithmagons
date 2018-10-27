@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "eslint": "^5.6.1",
+    "htmlhint": "^0.10.1",
     "webpack": "^4.17.2",
     "webpack-clear-console": "^1.0.3",
     "webpack-command": "^0.4.1"

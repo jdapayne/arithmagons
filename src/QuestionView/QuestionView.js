@@ -106,6 +106,33 @@ export default class QuestionView {
       katex.render(l.text, innerlabel);
       label.appendChild(innerlabel);
       container.appendChild(label);
+
+      //remove space if the inner label is too big
+      if (innerlabel.offsetWidth/innerlabel.offsetHeight > 2) {
+        const newlabeltext = l.text.replace(/\+/,"\\!+\\!").replace(/-/,"\\!-\\!");
+        katex.render(newlabeltext,innerlabel);
+      }
+
+      //position correctly - this could def be optimised - lots of back-and-forth
+      const lwidth = label.offsetWidth;
+      const lheight = label.offsetHeight;
+      label.style.left = (l.pos.x - lwidth/2) + "px";
+      label.style.top = (l.pos.y - lheight/2) + "px";
+
+      if (l.pos.x < canvas.width/2-5 && l.pos.x+lwidth/2 > canvas.width/2) {
+        label.style.left = (canvas.width/2 - lwidth - 3) + "px";
+      }
+      if (l.pos.x > canvas.width/2+5 && l.pos.x-lwidth/2 < canvas.width/2) {
+        label.style.left = (canvas.width/2 + 3) + "px";
+      }
+
+      //nudge away from center
+      //if (l.pos.x < canvas.width/2 && // starts on left, ends on right
+      //label.offsetLeft+label.offsetWidth > canvas.width/2
+      //) {
+      //label.style.left = (canvas.width/2 - label.offsetWidth - 5) + "px";
+      //label.style.transform="translateX(0) translateY(-50%)";
+      //}
     });
   }
 }

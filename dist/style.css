@@ -46,7 +46,6 @@ body {
 /* labels */
 .label {
   position: absolute;
-  transform: translateX(-50%) translateY(-50%);
   display: flex;
   justify-content:center;
   flex-direction:column;
@@ -77,7 +76,7 @@ body {
   background: white;
 }
 .label>div {
-    margin: 8px;
+    margin: 5px;
 }
 
 
@@ -107,16 +106,12 @@ header {
     padding: 5px
 }
 
-.options-part h2 {
+h2 {
     display: inline-block;
     font-size: medium;
     margin-top: 0;
     margin-bottom: 0.5em;
     margin-right: 1em
-}
-
-.options-part a {
-    float: right
 }
 
 .options-list {
@@ -147,7 +142,7 @@ label {
 }
 
 .options-modal{
-    float: right;
+    float: left;
 }
 
 input[type="number"]{
@@ -197,6 +192,7 @@ input[type="range"]{
     padding: 15px;
     display: none;
 }
+
 /*}}}*/
 
 .hidden {

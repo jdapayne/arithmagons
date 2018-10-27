@@ -98,7 +98,7 @@ export function gcd(a, b) {
     if (!b)
       return a;
   }
-};
+}
 
 export function lcm(a,b) {
   return a*b/gcd(a,b);

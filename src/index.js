@@ -42,8 +42,10 @@ App.init = function () {
 
   document.getElementById("show-answers").addEventListener("click",App.toggleAllAnswers);
 
-  document.addEventListener("change", function(e) {
+  document.addEventListener("change", function(e) { //do things when options change
     App.settings.fromPage();
+    App.optionsActions(e);
+
     if (e.target.name === "options-type") {
       App.toggleHidden(["options-advanced","options-simple"]);
     }
@@ -213,8 +215,8 @@ App.generateAll = function () {
   App.clear();
   // Create containers for questions and generate a question in each container
   let n = App.settings.n_questions;
-  const time_message="generate " + n + " questions";
-  console.time(time_message);
+  //const time_message="generate " + n + " questions";
+  //console.time(time_message);
   for (let i=0; i<n; i++) {
     // Make DOM elements
     let container = document.createElement("div");
@@ -248,8 +250,7 @@ App.generateAll = function () {
     // Make question and question view
     App.generate(i);
   }
-  console.timeEnd(time_message);
-  //MathJax.Hub.Queue(["Typeset",MathJax.Hub,"display-box"]);
+  //console.timeEnd(time_message);
 };
 /* * * * * * * * * * * * * * * * * * * * */
 
@@ -261,7 +262,6 @@ App.zoom = function (sign) {
   App.questions.forEach( function (q) {
     App.reDraw(q);
   });
-  //MathJax.Hub.Queue(["Typeset",MathJax.Hub,"display-box"]);
 };
 
 /* * * Data on generated questions * * *
@@ -288,11 +288,10 @@ App.settings = {
   options: {
     min: -20,
     max: 20,
-    n: 3,
+    n: 4,
     num_diff: 2,
     puz_diff: 1,
-    op: "add",
-    type: "integer"
+    type: "integer-add"
   },
   n_questions: 8,
   debug: true
@@ -357,6 +356,32 @@ App.modalClose = function () {
     document.body.appendChild(children[0]);
   }
   overlay.classList.add("hidden");
+};
+
+App.optionsActions = function (e) {
+  switch (e.target.name) {
+  case "options-type":
+    App.toggleHidden(["options-advanced","options-simple"]);
+    break;
+  case "type": {
+    const s = App.settings;
+    if (e.target.value.startsWith("algebra")) {
+      s.zoom = 1.4;
+    } else {
+      s.zoom = 1;
+    }
+    s.canvas_width = s.canvas_width_base * s.zoom;
+    s.canvas_height = s.canvas_height_base * s.zoom;
+
+    if (e.target.value.startsWith("integer")) {
+      document.getElementById("difficulty").classList.add("hidden");
+      document.getElementById("minmax").classList.remove("hidden");
+    } else {
+      document.getElementById("difficulty").classList.remove("hidden");
+      document.getElementById("minmax").classList.add("hidden");
+    }
+  }
+  }
 };
 
 App.toggleHidden = function (idlist) {

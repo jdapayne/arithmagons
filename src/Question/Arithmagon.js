@@ -11,8 +11,6 @@ export default class Arithmagon {
    */
   constructor (options) {
     const defaults = {
-      min : 0,
-      max : 20,
       op  : "add",
       n : 3,
       num_diff: 1, // difficulty of operating on the numbers 
@@ -36,7 +34,7 @@ export default class Arithmagon {
     // init sets up operation and vertices
     switch(settings.type) {
     case "integer-add": 
-      case "integer-multiply":
+    case "integer-multiply":
       this.initInteger(settings);
       break;
     case "fraction-add":
@@ -196,47 +194,47 @@ export default class Arithmagon {
   initAlgebraAdd(settings){
     const diff=settings.num_diff;
     switch (diff) {
-      case 1: {
+    case 1: {
+      const variable = String.fromCharCode(randBetween(97,122));
+      for (let i=0; i<this.n; i++) {
+        const coeff = randBetween(1,10).toString();
+        this.vertices[i] = {
+          val: new Polynomial(coeff + variable),
+          hidden: false
+        };
+      }
+    }
+      break;
+    case 2: 
+    default: {
+      if (Math.random()<0.5) { // variable + constant
         const variable = String.fromCharCode(randBetween(97,122));
         for (let i=0; i<this.n; i++) {
           const coeff = randBetween(1,10).toString();
+          const constant = randBetween(1,10).toString();
           this.vertices[i] = {
-            val: new Polynomial(coeff + variable),
+            val: new Polynomial(coeff + variable + "+" + constant),
+            hidden: false
+          };
+        }
+      } else {
+        const variable1 = String.fromCharCode(randBetween(97,122));
+        let variable2 = variable1;
+        while (variable2===variable1) {
+          variable2 = String.fromCharCode(randBetween(97,122));
+        }
+
+        for (let i=0; i<this.n; i++) {
+          const coeff1 = randBetween(1,10).toString();
+          const coeff2 = randBetween(1,10).toString();
+          this.vertices[i] = {
+            val: new Polynomial( coeff1 + variable1 + "+" + coeff2 + variable2),
             hidden: false
           };
         }
       }
       break;
-      case 2: 
-      default: {
-        if (Math.random()<0.5) { // variable + constant
-          const variable = String.fromCharCode(randBetween(97,122));
-          for (let i=0; i<this.n; i++) {
-            const coeff = randBetween(1,10).toString();
-            const constant = randBetween(1,10).toString();
-            this.vertices[i] = {
-              val: new Polynomial(coeff + variable + "+" + constant),
-              hidden: false
-            };
-          }
-        } else {
-          const variable1 = String.fromCharCode(randBetween(97,122));
-          let variable2 = variable1;
-          while (variable2===variable1) {
-            variable2 = String.fromCharCode(randBetween(97,122));
-          }
-
-          for (let i=0; i<this.n; i++) {
-            const coeff1 = randBetween(1,10).toString();
-            const coeff2 = randBetween(1,10).toString();
-            this.vertices[i] = {
-              val: new Polynomial( coeff1 + variable1 + "+" + coeff2 + variable2),
-              hidden: false
-            };
-          }
-        }
-      break;
-      }
+    }
     }
   }
 
@@ -255,83 +253,117 @@ export default class Arithmagon {
      */
     const diff=settings.num_diff;
     switch (diff) {
-      case 1: 
-        {
-        const variable = String.fromCharCode(randBetween(97,122));
-        for (let i=0; i<this.n; i++) {
-          const coeff = randBetween(1,10).toString();
-          const term = i%2===0? coeff : coeff+variable;
-          this.vertices[i] = {
-            val: new Polynomial(term),
-            hidden: false
-          };
-        }
+    case 1: 
+    {
+      const variable = String.fromCharCode(randBetween(97,122));
+      for (let i=0; i<this.n; i++) {
+        const coeff = randBetween(1,10).toString();
+        const term = i%2===0? coeff : coeff+variable;
+        this.vertices[i] = {
+          val: new Polynomial(term),
+          hidden: false
+        };
+      }
       break;
-      }
+    }
 
-      case 2: {
-        const variable1 = String.fromCharCode(randBetween(97,122));
-        const variable2 = String.fromCharCode(randBetween(97,122));
-        for (let i=0; i<this.n; i++) {
-          const coeff = randBetween(1,10).toString();
-          const variable = randElem([variable1,variable2]);
-          this.vertices[i] = {
-            val: new Polynomial(coeff + variable),
-            hidden: false
-          };
-        }
-        break;
+    case 2: {
+      const variable1 = String.fromCharCode(randBetween(97,122));
+      const variable2 = String.fromCharCode(randBetween(97,122));
+      for (let i=0; i<this.n; i++) {
+        const coeff = randBetween(1,10).toString();
+        const variable = randElem([variable1,variable2]);
+        this.vertices[i] = {
+          val: new Polynomial(coeff + variable),
+          hidden: false
+        };
       }
+      break;
+    }
 
-      case 3: {
-        const v = String.fromCharCode(randBetween(97,122));
-        for (let i=0; i<this.n; i++) {
-          const coeff = randBetween(1,10).toString();
-          const idx = randBetween(1,3).toString()
-          this.vertices[i] = {
-            val: new Polynomial(coeff + v + "^" + idx),
-            hidden: false
-          };
-        }
-        break;
+    case 3: {
+      const v = String.fromCharCode(randBetween(97,122));
+      for (let i=0; i<this.n; i++) {
+        const coeff = randBetween(1,10).toString();
+        const idx = randBetween(1,3).toString();
+        this.vertices[i] = {
+          val: new Polynomial(coeff + v + "^" + idx),
+          hidden: false
+        };
       }
+      break;
+    }
 
-      case 4: {
-        const startAscii = randBetween(97,120);
-        const v1 = String.fromCharCode(startAscii);
-        const v2 = String.fromCharCode(startAscii+1);
-        const v3 = String.fromCharCode(startAscii+2);
-        for (let i=0; i<this.n; i++) {
-          const a = randBetween(1,10).toString();
-          const n1 = "^"+randBetween(0,3).toString();
-          const n2 = "^"+randBetween(0,3).toString();
-          const n3 = "^"+randBetween(0,3).toString();
-          const term = a+v1+n1+v2+n2+v3+n3;
-          this.vertices[i] = {
-            val: new Polynomial(term),
-            hidden: false
-          };
-        }
-        break;
+    case 4: {
+      const startAscii = randBetween(97,120);
+      const v1 = String.fromCharCode(startAscii);
+      const v2 = String.fromCharCode(startAscii+1);
+      const v3 = String.fromCharCode(startAscii+2);
+      for (let i=0; i<this.n; i++) {
+        const a = randBetween(1,10).toString();
+        const n1 = "^"+randBetween(0,3).toString();
+        const n2 = "^"+randBetween(0,3).toString();
+        const n3 = "^"+randBetween(0,3).toString();
+        const term = a+v1+n1+v2+n2+v3+n3;
+        this.vertices[i] = {
+          val: new Polynomial(term),
+          hidden: false
+        };
       }
+      break;
+    }
 
-      case 5:
-      case 6:
-      default: { // e.g. 3 * (2x-5)
-        const variable = String.fromCharCode(randBetween(97,122));
-        for (let i=0; i<this.n; i++) {
-          const coeff = randBetween(1,10).toString();
-          const constant = randBetween(-9,9).toString();
-          let term = coeff;
-          if (diff===6 || i%2===1) term += variable;
-          if (i%2===1) term += "+" + constant;
-          this.vertices[i] = {
-            val: new Polynomial(term),
-            hidden: false
-          };
-        }
-        break;
+    case 5:
+    case 6: { // e.g. 3(x) * (2x-5)
+      const variable = String.fromCharCode(randBetween(97,122));
+      for (let i=0; i<this.n; i++) {
+        const coeff = randBetween(1,10).toString();
+        const constant = randBetween(-9,9).toString();
+        let term = coeff;
+        if (diff===6 || i%2===1) term += variable;
+        if (i%2===1) term += "+" + constant;
+        this.vertices[i] = {
+          val: new Polynomial(term),
+          hidden: false
+        };
       }
+      break;
+    }
+
+    case 7: { // e.g. 3x^2y(4xy^2+5xy)
+      const startAscii = randBetween(97,120);
+      const v1 = String.fromCharCode(startAscii);
+      const v2 = String.fromCharCode(startAscii+1);
+      for (let i=0; i<this.n; i++) {
+        const a1 = randBetween(1,10).toString();
+        const n11 = "^"+randBetween(0,3).toString();
+        const n12 = "^"+randBetween(0,3).toString();
+        let term = a1+v1+n11+v2+n12;
+        if (i%2===1) {
+          const a2 = randBetween(-9,9).toString();
+          const n21 = "^"+randBetween(0,3).toString();
+          const n22 = "^"+randBetween(0,3).toString();
+          term += "+" + a2 + v1 + n21 + v2 + n22;
+        }
+        this.vertices[i] = {
+          val: new Polynomial(term),
+          hidden: false
+        };
+      }
+      break;
+    }
+
+    case 8: // { e.g. (x+5) * (x-2)
+    default: {
+      const variable = String.fromCharCode(randBetween(97,122));
+      for (let i=0; i<this.n; i++) {
+        const constant = randBetween(-9,9).toString();
+        this.vertices[i] = {
+          val: new Polynomial(variable+"+"+constant),
+          hidden: false
+        };
+      }
+    }
 
     }
   }
